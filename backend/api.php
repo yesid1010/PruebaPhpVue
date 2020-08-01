@@ -1,56 +1,64 @@
 <?php
-require_once('conexion.php');
+require_once('model/Conection.php');
+require_once('Controllers/ProductController.php');
+require_once('Controllers/CategoryController.php');
+
+// creamos la conexion a la base de datos
+$conection = new Conection();
+$connect = $conection->connect();
+
+// recibimos los parametros
+$params = json_decode(file_get_contents("php://input"));
 
 
-$received_data = json_decode(file_get_contents("php://input"));
-$data = array();
-$categories = array();
-$carr=array();
-if($received_data->action == 'fetchall')
+// rutas 
+
+if($params->url == 'products')
 {
-    if($received_data->selectedCategorie == 0){
-        $query = "SELECT * FROM products";
-    }else{
-        $query = "SELECT * FROM products WHERE idcategory = $received_data->selectedCategorie";
-    }
-    
-    $statement = $connect->prepare($query);
-    $statement->execute();
-    while($row = $statement->fetch(PDO::FETCH_ASSOC))
-    {
-    $data[] = $row;
-    }
+    $productController  = new ProductController();
+    $products           = $productController->getProducts($connect,$params->category);
 
-    $query = "SELECT * FROM categories";
-    $statement = $connect->prepare($query);
-    $statement->execute();
-    while($row = $statement->fetch(PDO::FETCH_ASSOC))
-    {
-    $categories[] = $row;
-    }
-    echo json_encode([$data,$categories]);
+    $categoryController = new CategoryController();
+    $categories         = $categoryController->getCategories($connect);
+
+    echo json_encode([$products,$categories]);
 }
 
-if($received_data->action == 'insert')
+if($params->url == 'save_category')
 {
- $data = array(
-  ':name' => $received_data->name,
-  ':description' => $received_data->$description,
-  ':price' => $received_data->price
- );
+    $categoryController = new CategoryController();
+    $category           = $categoryController->create($connect,$params->name);
+
+    echo json_encode($category);
+}
 
 
- $query = "INSERT INTO ordenes () VALUES ()";
+
+if($params->url == 'insert')
+{
+//  $data = array(
+//   ':name' => $received_data->name,
+//   ':description' => $received_data->$description,
+//   ':price' => $received_data->price
+//  );
+
+
+ $query = "INSERT INTO ordenes () VALUES () ";
 
  $statement = $connect->prepare($query);
 
- $statement->execute($data);
+ $statement->execute();
  
- $output = array(
-  'message' => 'Data Inserted'
- );
+ $ordenID = $connect->lastInsertId();
 
- $query2 = "INSERT INTO detailsOrden () VALUES ()"; 
+for ($i=0; $i < $carrito; $i++) { 
+   
+}
+
+ $output = array(
+  'message' => 'Data Inserted',
+  'idorden'=> $result
+ );
  echo json_encode($output);
 }
 

@@ -3,20 +3,21 @@ var application = new Vue({
     data:{
         products:'',
         categories:'',
-        selectedCategorie:'',
+        category:'',
         myModel:false,
         carrito:''
     },
 
     methods:{
-                fetchAllData:function(selectedCategorie=0){
+                fetchAllData:function(category=0){
                     axios.post('backend/api.php', {
-                        action:'fetchall',
-                        selectedCategorie
+                        url:'products',
+                        category
                     })
                     .then(function(response){
                         application.products = response.data[0];
                         application.categories = response.data[1];
+                        console.log(response.data);
                     });
                 },
 
@@ -26,13 +27,13 @@ var application = new Vue({
 
                 addOrden: function(carrito){
                     axios.post('backend/api.php', {
-                        action:'insert',
+                        url:'insert',
                         carrito
                     })
                     .then(function(response){
                             console.log('compra realizada')
                     });
-                }
+                },
 
     },
     created:function(){

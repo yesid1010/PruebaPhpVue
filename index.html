@@ -46,16 +46,19 @@
                 <div class="form-group col-md-4">
                     <label >Categorias</label>
 
-                    <select v-model="selectedCategorie" class="form-control">
+                    <select v-model="category" class="form-control">
                         <option  value="0">Todas</option>
                         <option v-for="category in categories"   v-bind:value="category.idcategory">
                           {{ category.name }}
                         </option>
                     </select>
-                    <button class="btn btn-primary mt-3" @click="fetchAllData(selectedCategorie)" >Filtar</button>
-                </div>
-        </div>
+                    <button class="btn btn-primary mt-3" @click="fetchAllData(category)" >Filtar</button>
+                    <button class="btn btn-primary mt-3" @click="addCategory()" >Agregar Categoria</button>
+                    
+                  </div>
 
+        </div>
+        
     <div class="row">
         <div class="card col-md-3" style="width: 18rem;" v-for="product in products">
                 <img :src="product.image" class="card-img-top" alt="...">
