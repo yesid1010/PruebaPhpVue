@@ -12,6 +12,7 @@ var application2 = new Vue({
             category:''
         }
     },
+   
     methods:{
         addCategory : function(name){
             axios.post('../backend/api.php',{
@@ -39,7 +40,11 @@ var application2 = new Vue({
                 product : product
             })
             .then( (data) =>{
-                application2.product = ''
+                application2.product.name = '';
+                application2.product.price = '';
+                application2.product.description = '';
+                application2.product.image = '';
+                application2.product.category = ''
                 console.log(data.data);
             })
         }
