@@ -32,7 +32,20 @@ if($params->url == 'save_category')
     echo json_encode($category);
 }
 
+if($params->url == 'categories')
+{
+    $categoryController  = new CategoryController();
+    $categories          = $categoryController->getCategories($connect);
 
+    echo json_encode($categories);
+}
+
+if($params->url == 'created_product')
+{
+    $productController  = new ProductController();
+    $product            = $productController->create($connect,$params->product);
+    echo json_encode($product);
+}
 
 if($params->url == 'insert')
 {

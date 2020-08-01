@@ -9,8 +9,12 @@ class ProductController{
         return $products;
     }
 
-    public function create(){
+    public function create($connect,$producto){
 
+        $product  = new Product($producto->name,$producto->price,$producto->image,$producto->description,$producto->category);
+        $data     = $product->save($connect,$product);
+
+        return $data;
     }
 
     public function update(){

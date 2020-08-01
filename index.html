@@ -53,15 +53,14 @@
                         </option>
                     </select>
                     <button class="btn btn-primary mt-3" @click="fetchAllData(category)" >Filtar</button>
-                    <button class="btn btn-primary mt-3" @click="addCategory()" >Agregar Categoria</button>
                     
                   </div>
 
         </div>
         
     <div class="row">
-        <div class="card col-md-3" style="width: 18rem;" v-for="product in products">
-                <img :src="product.image" class="card-img-top" alt="...">
+        <div class="card col-md-3 my-1" v-for="product in products">
+                <img :src="product.image" width="500px" height="150px" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{product.name}}</h5>
                     <p class="card-text">{{product.description}}</p>
