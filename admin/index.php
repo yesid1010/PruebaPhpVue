@@ -23,14 +23,13 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                  
-                <a class="nav-link" href="#">Products <span class="sr-only">(current)</span></a>
+                <router-link to="/products" class="nav-link">Products</router-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Categories</a>
+                <router-link to="/categories" class="nav-link">Categories</router-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Ordenes</a>
+                <router-link to="/ordenes" class="nav-link">Ordenes</router-link>
               </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
@@ -42,18 +41,19 @@
       </header>
 
     <div class="container mt-5 pt-5">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory">Crear Categoria</button>
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createProduct">Crear Producto</button>
+        <router-view></router-view>
     </div>
-
+<div class="container">
+                                      </div>
     <?php
-      include('components/modals/modalCategory.php');
+      //include('components/modals/modalCategory.php');
       include('components/modals/modalProduct.php');
     ?>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../assets/js/appAdmin.js"></script>
+<script type="module" src="../assets/js/appAdmin.js"></script>
+
 </body>
 </html>

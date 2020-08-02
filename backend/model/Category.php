@@ -6,7 +6,7 @@ class Category {
 
     public function get($connect){
         $categories = array();
-        $query = "SELECT * FROM categories";
+        $query = "SELECT * FROM categories ORDER BY idcategory DESC";
         $statement = $connect->prepare($query);
         $statement->execute();
         while($row = $statement->fetch(PDO::FETCH_ASSOC))
