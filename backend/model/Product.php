@@ -20,9 +20,9 @@ class Product{
         $products = array();
 
         if($category == 0){
-            $query = "SELECT * FROM products";
+            $query = "SELECT * FROM products ORDER BY idproduct DESC";
         }else{
-            $query = "SELECT * FROM products WHERE idcategory = $category";
+            $query = "SELECT * FROM products WHERE idcategory = $category ORDER BY idproduct DESC";
         }
         $statement = $connect->prepare($query);
         $statement->execute();
