@@ -28,8 +28,8 @@ const Products = {
                 this.product.description = '';
                 this.product.image = '';
                 this.product.category = '';
-                console.log(data.data);
                 this.getProducts();
+                this.closemodal('createProduct');
             })
         },
         getProducts:function(category=0){
@@ -42,6 +42,9 @@ const Products = {
                 that.products = response.data[0];
                 that.categories = response.data[1];
             });
+        },
+        closemodal: function(modal){
+            $('#'+modal).modal('hide');
         }
     },
     template: `<div>

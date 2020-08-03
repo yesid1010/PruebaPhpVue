@@ -3,7 +3,7 @@ require_once('model/Category.php');
 
 class CategoryController{
 
-    public function getCategories($connect){
+    public function get($connect){
         $category  = new Category();
         $categories = $category->get($connect);
         return $categories;
@@ -20,8 +20,10 @@ class CategoryController{
 
     }
 
-    public function delete(){
-        
+    public function delete($connect,$id){
+        $category  = new Category();
+        $data = $category->delete($connect,$id);
+        return $data;
     }
     
 }

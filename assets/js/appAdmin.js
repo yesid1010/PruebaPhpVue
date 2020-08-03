@@ -26,34 +26,10 @@ var application2 = new Vue({
    
     el:'#appAdmin',
     data:{
-        
-        products:[] = '',
-        categories:'',
-        category:'',
-        product:{
-            name:'',
-            price:'',
-            image:'',
-            description:'',
-            category:''
-        }
+
     },
    
     methods:{
-        addProduct(product){
-            axios.post('../backend/api.php',{
-                url:'created_product',
-                product : product
-            })
-            .then( (data) =>{
-                application2.product.name = '';
-                application2.product.price = '';
-                application2.product.description = '';
-                application2.product.image = '';
-                application2.product.category = ''
-                console.log(data.data);
-            })
-        }
     },
 
     created:function(){},

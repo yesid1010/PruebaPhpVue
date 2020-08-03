@@ -3,6 +3,7 @@ const Categories = {
             return {
                 categories:[],
                 name:'',
+                
             }
         },
         created:function(){
@@ -16,11 +17,14 @@ const Categories = {
                 })
                 .then((data)=>{
                     this.name = ''
-                    console.log(data.data);
                     this.getCategories();
+                    this.closemodal('createCategory');
+                    swal("Guardada", "Categorìa Creada", "success",{
+                        timer: 2000,
+                        button:false
+                    });
                 })
             },
-
             getCategories:function(){
                 var that = this;
                 axios.post('../backend/api.php', {
@@ -28,8 +32,31 @@ const Categories = {
                 })
                 .then(function(response){
                     that.categories = response.data;
-                    console.log(that.categories);
                 });
+            },
+            deleteCategory : function(id){
+                axios.post('../backend/api.php',{
+                    url:'deleteCategory',
+                    id: id
+                })
+                .then((data)=>{
+                    this.getCategories();
+                    swal("Eliminada", "Categorìa eliminada", "success",{
+                        timer: 2000,
+                        button:false
+                    });
+                    console.log(data.data);
+                })
+
+            },
+            closemodal: function(modal){
+                $('#'+modal).modal('hide');
+            },
+            confirmDelete: function(id){
+                let r = confirm("¿Seguro desea eliminar esta categorìa");
+                if (r) {
+                    this.deleteCategory(id)
+                } 
             }
         },
         template: `<div>
@@ -53,7 +80,7 @@ const Categories = {
                                 <td>{{category.name}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory">Editar</button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createCategory">Eliminar</button>
+                                    <button type="button" @click="confirmDelete(category.idcategory)"  class="btn btn-danger" >Eliminar</button>
                                 </td>
                                 </tr>
                             </tbody>

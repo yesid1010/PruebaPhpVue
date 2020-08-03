@@ -35,9 +35,17 @@ if($params->url == 'save_category')
 if($params->url == 'categories')
 {
     $categoryController  = new CategoryController();
-    $categories          = $categoryController->getCategories($connect);
+    $categories          = $categoryController->get($connect);
 
     echo json_encode($categories);
+}
+
+if($params->url == 'deleteCategory')
+{
+     $categoryController  = new CategoryController();
+     $category            = $categoryController->delete($connect,$params->id);
+    
+     echo json_encode([$category,"Categorìa eliminada"]);
 }
 
 if($params->url == 'created_product')

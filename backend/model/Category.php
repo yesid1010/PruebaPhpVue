@@ -35,9 +35,9 @@ class Category {
         $query = "INSERT INTO categories (name) VALUES (:name)";
         $statement = $connect->prepare($query);
         $statement->execute($data);
-        $ordenID = $connect->lastInsertId();
+        $idcategory = $connect->lastInsertId();
 
-        $category = $this->getCategory($connect,$ordenID);
+        $category = $this->getCategory($connect,$idcategory);
 
         return $category;
     }
@@ -47,6 +47,16 @@ class Category {
         $statement = $connect->prepare($query);
         $statement->execute();
         $category = $statement->fetch(PDO::FETCH_ASSOC);
+        return $category;
+    }
+
+    public function delete($connect,$id){
+        $category = $this->getCategory($connect,$id); // obtento la categoria a eliminar
+        $data = array(':id' => $id);
+        $query = "DELETE FROM categories WHERE idcategory = :id";
+        $statement = $connect->prepare($query);
+        $statement->execute($data);
+        
         return $category;
     }
 }
