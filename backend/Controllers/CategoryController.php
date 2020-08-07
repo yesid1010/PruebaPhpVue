@@ -10,14 +10,16 @@ class CategoryController{
     }
 
     public function create($connect,$name){
-        $category  = new Category();
+        $category  = new Category($name);
 
-        $data = $category->save($connect,$name);
+        $data = $category->save($connect);
         return $data;
     }
 
-    public function update(){
-
+    public function update($connect,$data){
+        $category  = new Category($data->name);
+        $data = $category->update($connect,$data->id);
+        return $data;
     }
 
     public function delete($connect,$id){

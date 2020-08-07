@@ -10,7 +10,6 @@ $connect = $conection->connect();
 // recibimos los parametros
 $params = json_decode(file_get_contents("php://input"));
 
-
 // rutas 
 
 if($params->url == 'products')
@@ -19,7 +18,7 @@ if($params->url == 'products')
     $products           = $productController->getProducts($connect,$params->category);
 
     $categoryController = new CategoryController();
-    $categories         = $categoryController->getCategories($connect);
+    $categories         = $categoryController->get($connect);
 
     echo json_encode([$products,$categories]);
 }
@@ -48,11 +47,27 @@ if($params->url == 'deleteCategory')
      echo json_encode([$category,"Categorìa eliminada"]);
 }
 
+if($params->url == 'updateCategory')
+{
+     $categoryController  = new CategoryController();
+     $category            = $categoryController->update($connect,$params->category);
+    
+     echo json_encode($category);
+}
+
 if($params->url == 'created_product')
 {
     $productController  = new ProductController();
-    $product            = $productController->create($connect,$params->product);
-    echo json_encode($product);
+   // $product            = $productController->create($connect,$params->product);
+    echo json_encode($params);
+}
+
+if($params->url == 'deleteProduct')
+{
+     $productController  = new ProductController();
+     $product            = $productController->delete($connect,$params->id);
+    
+     echo json_encode([$product,"Producto eliminado"]);
 }
 
 if($params->url == 'insert')

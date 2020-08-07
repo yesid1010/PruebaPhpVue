@@ -49,14 +49,56 @@ const Categories = {
                 })
 
             },
+            editCategory: function(category){
+                var form = document.createElement("div");
+                form.innerHTML = `
+                <input value="${category.idcategory}" type="hidden"><br>
+                <input id="name" value="${category.name}" class="form-control" type="text"><br>`;
+                console.log(category.name);
+                console.log(category.idcategory);
+
+                    swal({
+                      title: 'Edit Category',
+                      content: form,
+                      buttons: true,
+                    }).then(() => {
+                        name = $('#name').val();
+                        this.updateCategory(category.idcategory,name);
+                    });
+            },
+            updateCategory:function(id,name){
+                axios.post('../backend/api.php',{
+                    url:'updateCategory',
+                    category: {
+                        id:id,
+                        name:name
+                    }
+                })
+                .then(data=>{
+                    this.getCategories();
+                    swal("Editada", "Categorìa Editada", "success",{
+                        timer: 2000,
+                        button:false
+                    });
+                    console.log(data.data);
+                })
+            },
             closemodal: function(modal){
                 $('#'+modal).modal('hide');
             },
             confirmDelete: function(id){
-                let r = confirm("¿Seguro desea eliminar esta categorìa");
-                if (r) {
-                    this.deleteCategory(id)
-                } 
+               swal({
+                        title: "¿Eliminar esta Categorìa?",
+                        text: "Esta acciòn no se podrà deshacer",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            this.deleteCategory(id)
+                        }
+                    });
             }
         },
         template: `<div>
@@ -79,7 +121,7 @@ const Categories = {
                                 <th >{{category.idcategory}}</th>
                                 <td>{{category.name}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory">Editar</button>
+                                    <button type="button" class="btn btn-primary" @click="editCategory(category)" >Editar</button>
                                     <button type="button" @click="confirmDelete(category.idcategory)"  class="btn btn-danger" >Eliminar</button>
                                 </td>
                                 </tr>

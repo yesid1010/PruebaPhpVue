@@ -4,8 +4,21 @@ class Category {
     private $idcategory;
     private $name;
 
+
+    public function __construct($name=''){
+        $this->name = $name;
+    }
+
+    public function setName($name){
+        $this->name = $name;
+    }
+
+    public function getName(){
+        return $this->name;
+    }
+
+    // metodo para obtener todas las categorìas
     public function get($connect){
-        $categories = array();
         $query = "SELECT * FROM categories ORDER BY idcategory DESC";
         $statement = $connect->prepare($query);
         $statement->execute();
@@ -17,21 +30,11 @@ class Category {
         return $categories;
     }
 
-    public function setName($name){
-        $this->name = $name;
-    }
+    // metodo para guardar una categorìa
+    public function save($connect){
 
-    public function getName(){
-        return $this->name;
-    }
+        $data = array(':name' => $this->getName());
 
-    public function save($connect,$name){
-
-        $data = array(
-            ':name' => $name
-           );
-
-      
         $query = "INSERT INTO categories (name) VALUES (:name)";
         $statement = $connect->prepare($query);
         $statement->execute($data);
@@ -42,6 +45,19 @@ class Category {
         return $category;
     }
 
+    // metodo para editar una categorìa
+    public function update($connect,$id){
+        $data = array(':name' => $this->getName());
+
+        $query = "UPDATE categories SET name = :name WHERE idcategory = $id";
+        $statement = $connect->prepare($query);
+        $statement->execute($data);
+        $category = $this->getCategory($connect,$id);
+
+        return $category;
+    }
+
+    // metodo para obtener una categorìa
     public function getCategory($connect,$id){
         $query = "SELECT * FROM categories WHERE idcategory = $id";
         $statement = $connect->prepare($query);
@@ -50,6 +66,7 @@ class Category {
         return $category;
     }
 
+    // metodo para eliminar una categorìa
     public function delete($connect,$id){
         $category = $this->getCategory($connect,$id); // obtento la categoria a eliminar
         $data = array(':id' => $id);

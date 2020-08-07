@@ -10,7 +10,6 @@ class ProductController{
     }
 
     public function create($connect,$producto){
-
         $product  = new Product($producto->name,$producto->price,$producto->image,$producto->description,$producto->category);
         $data     = $product->save($connect,$product);
 
@@ -21,8 +20,10 @@ class ProductController{
 
     }
 
-    public function delete(){
-        
+    public function delete($connect,$id){
+        $product  = new Product();
+        $data     = $product->delete($connect,$id);
+        return $data;
     }
 
 }

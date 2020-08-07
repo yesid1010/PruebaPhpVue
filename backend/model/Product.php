@@ -82,4 +82,18 @@ class Product{
         
         return $product;
     }
+
+    public function delete($connect,$id){
+        $product = $this->getProduct($connect,$id); // obtento el producto a eliminar
+        $data = array(':id' => $id);
+        $query = "DELETE FROM products WHERE idproduct = :id";
+        $statement = $connect->prepare($query);
+        $statement->execute($data);
+        
+        return $product;
+    }
 }
+
+
+
+

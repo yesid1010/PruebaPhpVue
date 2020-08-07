@@ -23,6 +23,7 @@ const Products = {
                 product : product
             })
             .then( (data) =>{
+                console.log(data);
                 this.product.name = '';
                 this.product.price = '';
                 this.product.description = '';
@@ -43,6 +44,35 @@ const Products = {
                 that.categories = response.data[1];
             });
         },
+        deleteProduct : function(id){
+            axios.post('../backend/api.php',{
+                url:'deleteProduct',
+                id: id
+            })
+            .then((data)=>{
+                this.getProducts();
+                swal("Eliminado", "Producto eliminado", "success",{
+                    timer: 2000,
+                    button:false
+                });
+                console.log(data.data);
+            })
+
+        },
+        confirmDelete: function(id){
+            swal({
+                     title: "¿Eliminar este Producto?",
+                     text: "Esta acciòn no se podrà deshacer",
+                     icon: "warning",
+                     buttons: true,
+                     dangerMode: true,
+                 })
+                 .then((willDelete) => {
+                     if (willDelete) {
+                         this.deleteProduct(id)
+                     }
+                 });
+         },
         closemodal: function(modal){
             $('#'+modal).modal('hide');
         }
@@ -74,7 +104,7 @@ const Products = {
                             <td> <img :src="product.image" width="100px" height="100px"  alt="..."></td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory">Editar</button>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createCategory">Eliminar</button>
+                                <button type="button" class="btn btn-danger" @click="confirmDelete(product.idproduct)">Eliminar</button>
                             </td>
                             </tr>
                         </tbody>
