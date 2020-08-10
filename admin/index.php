@@ -14,37 +14,35 @@
     <div id="appAdmin">
 
     
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <router-link to="/products" class="nav-link">Products</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/categories" class="nav-link">Categories</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/ordenes" class="nav-link">Ordenes</router-link>
-              </li>
-            </ul>
-            <form class="form-inline mt-2 mt-md-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </div>
-        </nav>
-      </header>
+      <header>
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+          
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <router-link to="/products" class="nav-link">Products</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link to="/categories" class="nav-link">Categories</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link to="/ordenes" class="nav-link">Ordenes</router-link>
+                </li>
+              </ul>
+              <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+        </header>
 
-    <div class="container mt-5 pt-5">
-        <router-view></router-view>
-    </div>
-<div class="container">
-                                      </div>
+      <div class="container mt-5 pt-5">
+          <router-view></router-view>
+      </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

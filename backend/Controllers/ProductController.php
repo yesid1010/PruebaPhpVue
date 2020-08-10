@@ -5,19 +5,22 @@ class ProductController{
 
     public function getProducts($connect,$category){
         $product  = new Product();
-        $products = $product->get($connect,$category);
-        return $products;
+        $data = $product->get($connect,$category);
+        return $data;
     }
 
     public function create($connect,$producto){
         $product  = new Product($producto->name,$producto->price,$producto->image,$producto->description,$producto->category);
-        $data     = $product->save($connect,$product);
+        $data     = $product->save($connect);
 
         return $data;
     }
 
-    public function update(){
+    public function update($connect,$producto){
+        $product  = new Product($producto->name,$producto->price,$producto->image,$producto->description,$producto->category);
+        $data     = $product->update($connect,$producto->idproduct);
 
+        return $data;
     }
 
     public function delete($connect,$id){

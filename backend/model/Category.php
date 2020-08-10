@@ -47,9 +47,12 @@ class Category {
 
     // metodo para editar una categorìa
     public function update($connect,$id){
-        $data = array(':name' => $this->getName());
+        $data = array(
+            ':id'=>$id,
+            ':name' => $this->getName()
+        );
 
-        $query = "UPDATE categories SET name = :name WHERE idcategory = $id";
+        $query = "UPDATE categories SET name = :name WHERE idcategory = :id";
         $statement = $connect->prepare($query);
         $statement->execute($data);
         $category = $this->getCategory($connect,$id);

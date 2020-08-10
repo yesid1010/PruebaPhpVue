@@ -45,7 +45,6 @@ const Categories = {
                         timer: 2000,
                         button:false
                     });
-                    console.log(data.data);
                 })
 
             },
@@ -54,9 +53,6 @@ const Categories = {
                 form.innerHTML = `
                 <input value="${category.idcategory}" type="hidden"><br>
                 <input id="name" value="${category.name}" class="form-control" type="text"><br>`;
-                console.log(category.name);
-                console.log(category.idcategory);
-
                     swal({
                       title: 'Edit Category',
                       content: form,
@@ -80,7 +76,6 @@ const Categories = {
                         timer: 2000,
                         button:false
                     });
-                    console.log(data.data);
                 })
             },
             closemodal: function(modal){

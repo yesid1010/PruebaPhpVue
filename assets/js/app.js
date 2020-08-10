@@ -5,7 +5,8 @@ var application = new Vue({
         categories:'',
         category:'',
         myModel:false,
-        carrito:''
+        carrito:'',
+        video:''
     },
 
     methods:{
@@ -17,14 +18,28 @@ var application = new Vue({
                     .then(function(response){
                         application.products = response.data[0];
                         application.categories = response.data[1];
-                        console.log(response.data);
                     });
                 },
 
                 addcard : function(product){
                     console.log(product)
                 },
+                getVideo(event){
+                    application.video = event.target.files[0];
+                },
+                addvideo:function(){
+                    const formData = new FormData()
+                    formData.append('video',application.video, application.video.name)
 
+                    axios.post('subir.php',formData)
+                    .then(response => {
+                        $('#file').val('');
+                        swal("Guardado", "Archivo Guardado", "success",{
+                            timer: 2000,
+                            button:false
+                        });
+                    })
+                },
                 addOrden: function(carrito){
                     axios.post('backend/api.php', {
                         url:'insert',

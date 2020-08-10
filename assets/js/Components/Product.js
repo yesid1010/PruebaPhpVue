@@ -4,6 +4,7 @@ const Products = {
                 products:[],
                 categories:[],
                 product:{
+                    idproduct:'',
                     name:'',
                     price:'',
                     image:'',
@@ -17,13 +18,28 @@ const Products = {
         this.getProducts();
     },
     methods: {
-        addProduct(product){
+        sendData:function(product){
+           let btnvalue = $('#btnsave').val();
+            if(btnvalue == 'save'){
+                this.addProduct(product,'created_product','Guardado');
+            }else{
+                this.addProduct(product,'update_product','Editado');
+            }
+        },
+        addProduct(product,url,mensaje){
+            if(product.name == ''|| product.price == '' || product.description == '' || product.image == '' || product.category == '' ){
+                swal("Error", "por favor llene todos los campos", "error",{
+                    timer: 2000,
+                    button:false
+                });
+                return 0;
+            }
+
             axios.post('../backend/api.php',{
-                url:'created_product',
+                url     : url,
                 product : product
             })
-            .then( (data) =>{
-                console.log(data);
+            .then( () =>{
                 this.product.name = '';
                 this.product.price = '';
                 this.product.description = '';
@@ -31,6 +47,10 @@ const Products = {
                 this.product.category = '';
                 this.getProducts();
                 this.closemodal('createProduct');
+                swal(mensaje, "Producto "+mensaje, "success",{
+                    timer: 2000,
+                    button:false
+                });
             })
         },
         getProducts:function(category=0){
@@ -49,15 +69,31 @@ const Products = {
                 url:'deleteProduct',
                 id: id
             })
-            .then((data)=>{
+            .then(()=>{
                 this.getProducts();
                 swal("Eliminado", "Producto eliminado", "success",{
                     timer: 2000,
                     button:false
                 });
-                console.log(data.data);
+
             })
 
+        },
+        openModal:function(accion,product=''){
+
+            
+            if(accion == 'save'){
+                $('#btnsave').val('save');
+            }else{
+                $('#btnsave').val('update');
+                this.product.idproduct   = product.idproduct;
+                this.product.name        = product.name;
+                this.product.price       = product.price;
+                this.product.image       = product.image;
+                this.product.description = product.description;
+                this.product.category    = product.idcategory    
+            }
+            $('#createProduct').modal('show');
         },
         confirmDelete: function(id){
             swal({
@@ -81,7 +117,7 @@ const Products = {
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-4"><h3>Products</h3></div>
-                        <div class="col-md-4 float-right"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#createProduct">Crear Producto</button></div>
+                        <div class="col-md-4 float-right"><button type="button" class="btn btn-success" @click="openModal('save')" >Crear Producto</button></div>
                     </div>
                     <hr>
                     <table class="table">
@@ -103,7 +139,7 @@ const Products = {
                             <td>{{product.description}}</td>
                             <td> <img :src="product.image" width="100px" height="100px"  alt="..."></td>
                             <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory">Editar</button>
+                                <button type="button" class="btn btn-primary" @click="openModal('update',product)">Editar</button>
                                 <button type="button" class="btn btn-danger" @click="confirmDelete(product.idproduct)">Eliminar</button>
                             </td>
                             </tr>
@@ -122,23 +158,24 @@ const Products = {
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="">Name</label>
-                                            <input v-model="product.name" type="text" class="form-control">
+                                            <input v-model="product.name" id="name" type="text" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="">Price</label>
-                                            <input v-model="product.price" type="number" class="form-control">
+                                            <input v-model="product.price" id="price" type="number" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="">image (url)</label>
-                                            <input v-model="product.image" type="text" class="form-control">
+                                            <input v-model="product.image" id="image" type="text" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                                 <label for="" >Category</label>
-                                                <select v-model="product.category" class="form-control">
-                                                <option v-for="category in categories"   v-bind:value="category.idcategory">
-                                                    {{ category.name }}
+                                                <select v-model="product.category" id="idcategory" class="form-control">
+
+                                                    <option v-for="category in categories"   v-bind:value="category.idcategory">
+                                                        {{ category.name }}
                                                     </option>
                                                 </select>
                                         </div>
@@ -146,13 +183,13 @@ const Products = {
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <label for="" >Description</label>
-                                            <textarea v-model="product.description" class="form-control" cols="10" rows="2"></textarea>
+                                            <textarea v-model="product.description" id="description" class="form-control" cols="10" rows="2"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="button" @click="addProduct(product)" class="btn btn-primary">Save</button>
+                                        <input type="button" class="btn btn-primary" id="btnsave" value="save" @click="sendData(product)" >
                                     </div>
                             </div>
                         </div>
@@ -161,3 +198,4 @@ const Products = {
     }
 
     export {Products};
+

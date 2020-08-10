@@ -57,9 +57,10 @@ if($params->url == 'updateCategory')
 
 if($params->url == 'created_product')
 {
-    $productController  = new ProductController();
-   // $product            = $productController->create($connect,$params->product);
-    echo json_encode($params);
+    
+     $productController  = new ProductController();
+     $product            = $productController->create($connect,$params->product);
+     echo json_encode($product);
 }
 
 if($params->url == 'deleteProduct')
@@ -70,32 +71,12 @@ if($params->url == 'deleteProduct')
      echo json_encode([$product,"Producto eliminado"]);
 }
 
-if($params->url == 'insert')
+if($params->url == 'update_product')
 {
-//  $data = array(
-//   ':name' => $received_data->name,
-//   ':description' => $received_data->$description,
-//   ':price' => $received_data->price
-//  );
-
-
- $query = "INSERT INTO ordenes () VALUES () ";
-
- $statement = $connect->prepare($query);
-
- $statement->execute();
- 
- $ordenID = $connect->lastInsertId();
-
-for ($i=0; $i < $carrito; $i++) { 
-   
-}
-
- $output = array(
-  'message' => 'Data Inserted',
-  'idorden'=> $result
- );
- echo json_encode($output);
+     $productController  = new ProductController();
+     $product            = $productController->update($connect,$params->product);
+    
+     echo json_encode($product);
 }
 
 ?>

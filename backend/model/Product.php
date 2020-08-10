@@ -35,7 +35,7 @@ class Product{
     }
 
 
-    public function save($connect,Product $product){
+    public function save($connect){
 
         $data = array(
             ':name'        => $this->getName(),
@@ -90,6 +90,31 @@ class Product{
         $statement = $connect->prepare($query);
         $statement->execute($data);
         
+        return $product;
+    }
+
+    public function update($connect,$id){
+        $data = array(
+            ':idproduct'   => $id,
+            ':name'        => $this->getName(),
+            ':description' => $this->getDescription(),
+            ':price'       => $this->getPrice(),
+            ':image'       => $this->getImage(),
+            ':idcategory'  => $this->getIdCategory(),
+           );
+      
+        $query = "UPDATE products SET name        = :name,
+                                      description = :description,
+                                      price       = :price,
+                                      image       = :image,
+                                      idcategory  = :idcategory
+                                WHERE idproduct   = :idproduct";
+                                
+        $statement = $connect->prepare($query);
+        $statement->execute($data);
+
+        $product = $this->getProduct($connect,$id); 
+
         return $product;
     }
 }
