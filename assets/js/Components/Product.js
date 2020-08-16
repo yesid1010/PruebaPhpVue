@@ -35,7 +35,7 @@ const Products = {
                 return 0;
             }
 
-            axios.post('../backend/api.php',{
+            axios.post('../backend/routes/index.php',{
                 url     : url,
                 product : product
             })
@@ -55,17 +55,17 @@ const Products = {
         },
         getProducts:function(category=0){
             var that = this;
-            axios.post('../backend/api.php', {
+            axios.post('../backend/routes/index.php', {
                 url:'products',
                 category
             })
             .then(function(response){
                 that.products = response.data[0];
-                that.categories = response.data[1];
+                that.categories = response.data[1].data;
             });
         },
         deleteProduct : function(id){
-            axios.post('../backend/api.php',{
+            axios.post('../backend/routes/index.php',{
                 url:'deleteProduct',
                 id: id
             })
@@ -111,6 +111,10 @@ const Products = {
          },
         closemodal: function(modal){
             $('#'+modal).modal('hide');
+        },
+        formatPrice(value) {
+            let val = (value/1).toFixed(0).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         }
     },
     template: `<div>
@@ -135,7 +139,7 @@ const Products = {
                             <tr v-for="product in products">
                             <th scope="row">{{product.idproduct}}</th>
                             <td>{{product.name}}</td>
-                            <td>{{product.price}}</td>
+                            <td>{{ formatPrice(product.price) }}</td>
                             <td>{{product.description}}</td>
                             <td> <img :src="product.image" width="100px" height="100px"  alt="..."></td>
                             <td>

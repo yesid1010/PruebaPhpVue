@@ -11,7 +11,7 @@ const Categories = {
         },
         methods: {
             addCategory : function(name){
-                axios.post('../backend/api.php',{
+                axios.post('../backend/routes/index.php',{
                     url:'save_category',
                     name:name
                 })
@@ -27,20 +27,25 @@ const Categories = {
             },
             getCategories:function(){
                 var that = this;
-                axios.post('../backend/api.php', {
+                axios.post('../backend/routes/index.php', {
                     url:'categories'
                 })
                 .then(function(response){
-                    that.categories = response.data;
+                    that.categories = response.data.data;
+                    console.log(response.data.data);
+                    console.log(response.data.data.count);
                 });
             },
             deleteCategory : function(id){
-                axios.post('../backend/api.php',{
+                axios.post('../backend/routes/index.php',{
                     url:'deleteCategory',
                     id: id
                 })
                 .then((data)=>{
                     this.getCategories();
+                    console.log(
+                        data
+                    );
                     swal("Eliminada", "Categorìa eliminada", "success",{
                         timer: 2000,
                         button:false
@@ -63,7 +68,7 @@ const Categories = {
                     });
             },
             updateCategory:function(id,name){
-                axios.post('../backend/api.php',{
+                axios.post('../backend/routes/index.php',{
                     url:'updateCategory',
                     category: {
                         id:id,
@@ -117,7 +122,8 @@ const Categories = {
                                 <td>{{category.name}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" @click="editCategory(category)" >Editar</button>
-                                    <button type="button" @click="confirmDelete(category.idcategory)"  class="btn btn-danger" >Eliminar</button>
+                                    <button type="button" v-if="category.count.product_category_count <= 0" @click="confirmDelete(category.idcategory)"  class="btn btn-danger" >Eliminar</button>
+                                    <button type="button" v-if="category.count.product_category_count > 0" disabled class="btn btn-secondary" >Eliminar</button>
                                 </td>
                                 </tr>
                             </tbody>

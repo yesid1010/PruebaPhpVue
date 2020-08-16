@@ -19,12 +19,27 @@ class Category {
 
     // metodo para obtener todas las categorìas
     public function get($connect){
+        $categories = ['data'=>[]];
         $query = "SELECT * FROM categories ORDER BY idcategory DESC";
         $statement = $connect->prepare($query);
         $statement->execute();
+
+        
         while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $categories[] = $row;
+            $id = $row['idcategory'];
+            $query_count = "SELECT COUNT(*) AS product_category_count FROM products WHERE idcategory = $id";
+            $stm_count = $connect->prepare($query_count);
+            $stm_count->execute();
+            $count = $stm_count->fetch(PDO::FETCH_ASSOC);
+
+            array_push($categories['data'],
+                [
+                   'idcategory' => $row['idcategory'],
+                   'name'=>$row['name'],
+                   'count' => $count
+                ]
+            );
         }
         
         return $categories;

@@ -1,7 +1,18 @@
 <?php
-require_once('model/Conection.php');
-require_once('Controllers/ProductController.php');
-require_once('Controllers/CategoryController.php');
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+
+$params = json_decode(file_get_contents("php://input"));
+
+if($params==''){
+     include('../pages/400.php');
+     return 0;
+}
+
+require_once('../model/Conection.php');
+require_once('../Controllers/ProductController.php');
+require_once('../Controllers/CategoryController.php');
 
 // creamos la conexion a la base de datos
 $conection = new Conection();
